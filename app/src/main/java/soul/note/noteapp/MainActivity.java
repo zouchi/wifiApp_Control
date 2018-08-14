@@ -54,15 +54,20 @@ public class MainActivity extends Activity {
 
 		//String strUrl = "http://192.168.1.104/"+val;
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectDiskReads().detectDiskWrites().detectNetwork()
-				.penaltyLog().build());
+				.detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+				.penaltyLog()
+                .build());
 		URL url = null;
 		try {
 			url = new URL(strUrl);
 			System.out.println(url.getPort());
 			HttpURLConnection urlConn = (HttpURLConnection) url
 					.openConnection();
-			InputStreamReader in = new InputStreamReader(
+            urlConn.setConnectTimeout(1000);
+            urlConn.setReadTimeout(1000);
+            InputStreamReader in = new InputStreamReader(
 					urlConn.getInputStream());
 			BufferedReader br = new BufferedReader(in);
 			String result = "";
